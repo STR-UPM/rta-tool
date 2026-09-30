@@ -13,8 +13,8 @@ adapter and records intentional differences in `docs/MIGRATION.md`.
 
 ## Functional reference
 
-The functional reference is the user-supplied `guide-4.pdf`, **RTA User's Guide**,
+The functional reference is the `legacy/guide-4.pdf`, **RTA User's Guide**,
 by Juan A. de la Puente, Universidad Politécnica de Madrid. The original Ada
-implementation and its sources were not supplied or copied. The PDF is not
-redistributed inside this project. `examples/guide_sample.tsf` transcribes the
-worked input example for verification.
+implementation and its sources were not supplied or copied.
+The file `examples/guide_sample.tsf` transcribes the worked input example
+for verification purposes.
