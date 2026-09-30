@@ -7,7 +7,7 @@ from .model import (
     Activation, AnalysisOptions, AnalysisResult, Diagnostic, JobResult,
     TaskResult, TaskSet, TaskSpec,
 )
-from .analysis_blocking import compute_blocking_PIP
+from .analysis_blocking import compute_blocking_PIP, compute_blocking_ICPP
 from .numbers import ceil_fraction
 
 
@@ -46,7 +46,7 @@ def prepare(task_set: TaskSet, options: AnalysisOptions) -> tuple[TaskSet, tuple
         if not users:
             warnings.append(Diagnostic("UNUSED_LOCK", f"{lock.name}: no task uses this lock"))
         locks.append(lock)
-    ceilings = {lock.name.casefold(): lock.ceiling for lock in locks}
+
     if options.compute_blocking:
         for owner in tasks:
             for use in owner.uses:
@@ -58,41 +58,9 @@ def prepare(task_set: TaskSet, options: AnalysisOptions) -> tuple[TaskSet, tuple
             blocking = 0
             if options.protocol == "PIP":
                 blocking = compute_blocking_PIP(task, tasks)
-                """
-                # Resources used by this task or any higher-priority task.
-                # Derive relevance from actual users, not configured ceilings.
-                relevant_locks = {
-                    use.lock.casefold()
-                    for user in tasks
-                    if user.priority >= task.priority
-                    for use in user.uses
-                }
-
-                # Longest critical section per resource among lower-priority tasks.
-                blocking_by_lock: dict[str, Fraction] = {}
-
-                for owner in tasks:
-                    if owner.priority >= task.priority:
-                        continue
-
-                    for use in owner.uses:
-                        lock_name = use.lock.casefold()
-
-                        if lock_name in relevant_locks:
-                            blocking_by_lock[lock_name] = max(
-                                blocking_by_lock.get(lock_name, Fraction(0)),
-                                use.duration,
-                            )
-
-                # PIP: sum one maximum per relevant resource.
-                blocking = sum(blocking_by_lock.values(), Fraction(0))
-                """
             else:
-                blocking = max((
-                    use.duration
-                    for owner in tasks if owner.priority < task.priority
-                    for use in owner.uses if ceilings[use.lock.casefold()] >= task.priority
-                ), default=Fraction(0))
+                ceilings = {lock.name.casefold(): lock.ceiling for lock in locks}
+                blocking = compute_blocking_ICPP(task, tasks, ceilings)
             tasks[i] = replace(task, blocking=blocking)
     elif tasks:
         warnings.append(Diagnostic("MANUAL_BLOCKING", "supplied blocking bounds are assumed valid; "

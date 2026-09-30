@@ -1,7 +1,6 @@
 """Response-time analysis with guide-compatible files and a Python API.
 
-Use TaskSpec/TaskSet/analyze for new code. Task/Protected_Object/RTA_solver preserve
-the principal construction API of the supplied original implementation.
+Use TaskSpec/TaskSet/analyze for new code.
 """
 from .analysis import analyze, interference_at, prepare
 from .errors import AnalysisLimitError, ModelError, OverloadError, ParseError, RTAError, UnsupportedModelError

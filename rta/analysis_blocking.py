@@ -5,8 +5,8 @@ def compute_blocking_PIP(task : TaskSpec, tasks: list[TaskSpec]) -> Fraction:
     """_summary_
 
     Args:
-        task (_type_): Task for which to compute blocking
-        tasks (_type_): List of all tasks in the system
+        task  : Task for which to compute blocking
+        tasks : List of all tasks in the system
 
     Returns:
         Fraction : Blocking time
@@ -39,4 +39,12 @@ def compute_blocking_PIP(task : TaskSpec, tasks: list[TaskSpec]) -> Fraction:
 
     # PIP: sum one maximum per relevant resource.
     blocking = sum(blocking_by_lock.values(), Fraction(0))
+    return blocking
+
+def compute_blocking_ICPP(task: TaskSpec, tasks: list[TaskSpec], ceilings: dict[str, int]) -> Fraction:
+    blocking = max((
+        use.duration
+        for owner in tasks if owner.priority < task.priority
+        for use in owner.uses if ceilings[use.lock.casefold()] >= task.priority
+    ), default=Fraction(0))
     return blocking
