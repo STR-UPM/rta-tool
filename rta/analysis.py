@@ -7,6 +7,7 @@ from .model import (
     Activation, AnalysisOptions, AnalysisResult, Diagnostic, JobResult,
     TaskResult, TaskSet, TaskSpec,
 )
+from .analysis_blocking import compute_blocking_PIP
 from .numbers import ceil_fraction
 
 
@@ -56,6 +57,8 @@ def prepare(task_set: TaskSet, options: AnalysisOptions) -> tuple[TaskSet, tuple
             # Eq. (3.1): ONLY critical sections executed by lower-priority tasks.
             blocking = 0
             if options.protocol == "PIP":
+                blocking = compute_blocking_PIP(task, tasks)
+                """
                 # Resources used by this task or any higher-priority task.
                 # Derive relevance from actual users, not configured ceilings.
                 relevant_locks = {
@@ -83,7 +86,7 @@ def prepare(task_set: TaskSet, options: AnalysisOptions) -> tuple[TaskSet, tuple
 
                 # PIP: sum one maximum per relevant resource.
                 blocking = sum(blocking_by_lock.values(), Fraction(0))
-
+                """
             else:
                 blocking = max((
                     use.duration
