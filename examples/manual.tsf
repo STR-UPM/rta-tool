@@ -1,0 +1,7 @@
+-- Run with -pcb: retain supplied priorities, ceilings, and blocking times.
+-- Bare lock uses are accepted because blocking has been supplied externally.
+task set Manual with 2 tasks and 1 locks is
+  lock Gate (10);
+  task Fast is periodic (10, 10, 0, 0, 2, 1, 0, 10, 0) uses Gate;
+  task Slow is sporadic (2, 25, 0, 0, 5, 0, 0, 25, 0) uses Gate;
+end Manual;

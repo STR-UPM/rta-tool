@@ -1,0 +1,11 @@
+-- Worked example in guide-4.pdf, Figure 2.2.
+-- priority, period, offset, jitter, wcet, blocking, interference, deadline, response
+ task set Sample with 3 tasks and 2 locks is
+   lock Lock_1;
+   lock Lock_2;
+   task Task_1 is periodic (0, 50, 0, 0, 19, 0, 0, 50, 0);
+   task Task_2 is periodic (0, 40, 0, 0, 6, 0, 0, 40, 0)
+     uses Lock_1 (2), Lock_2 (5);
+   task Task_3 is periodic (0, 30, 0, 0, 8, 0, 0, 30, 0)
+     uses Lock_1 (5);
+ end Sample;

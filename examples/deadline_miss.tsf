@@ -1,0 +1,4 @@
+-- Analysis completes; deadline miss is reported, exit status 1.
+task set Miss with 1 tasks is
+  task TooLate is periodic (0, 10, 0, 0, 4, 0, 0, 3, 0);
+end Miss;

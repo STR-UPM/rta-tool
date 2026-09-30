@@ -1,0 +1,5 @@
+-- Expected exit status 1; no response table and no saved/updated files.
+task set Overloaded with 2 tasks is
+  task First is periodic (0, 10, 0, 0, 6, 0, 0, 10, 0);
+  task Second is periodic (0, 10, 0, 0, 6, 0, 0, 10, 0);
+end Overloaded;

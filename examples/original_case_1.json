@@ -1,0 +1,141 @@
+{
+  "format_version": 1,
+  "name": "OriginalCase1",
+  "locks": [
+    {
+      "name": "po1",
+      "ceiling": 0
+    },
+    {
+      "name": "po2",
+      "ceiling": 0
+    },
+    {
+      "name": "po3",
+      "ceiling": 0
+    }
+  ],
+  "tasks": [
+    {
+      "name": "IRQ",
+      "activation": "periodic",
+      "priority": 1000,
+      "period": "2000",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "20",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "20",
+      "response": "0",
+      "uses": []
+    },
+    {
+      "name": "Relax Vol.",
+      "activation": "periodic",
+      "priority": 5,
+      "period": "500",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "30",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "200",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "po2",
+          "duration": "7"
+        }
+      ]
+    },
+    {
+      "name": "Detect Vol.",
+      "activation": "periodic",
+      "priority": 4,
+      "period": "300",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "20",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "300",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "po1",
+          "duration": "5"
+        }
+      ]
+    },
+    {
+      "name": "Riesgos",
+      "activation": "periodic",
+      "priority": 3,
+      "period": "300",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "50",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "300",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "po1",
+          "duration": "7"
+        },
+        {
+          "lock": "po2",
+          "duration": "10"
+        },
+        {
+          "lock": "po3",
+          "duration": "10"
+        }
+      ]
+    },
+    {
+      "name": "Incli. Cabeza",
+      "activation": "periodic",
+      "priority": 2,
+      "period": "600",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "100",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "500",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "po1",
+          "duration": "10"
+        },
+        {
+          "lock": "po2",
+          "duration": "10"
+        }
+      ]
+    },
+    {
+      "name": "Det. Pul.",
+      "activation": "sporadic",
+      "priority": 1,
+      "period": "2000",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "30",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "2000",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "po3",
+          "duration": "10"
+        }
+      ]
+    }
+  ]
+}

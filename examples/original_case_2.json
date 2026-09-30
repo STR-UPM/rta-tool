@@ -1,0 +1,118 @@
+{
+  "format_version": 1,
+  "name": "OriginalCase2",
+  "locks": [
+    {
+      "name": "Lock 1",
+      "ceiling": 0
+    },
+    {
+      "name": "Lock 2",
+      "ceiling": 0
+    },
+    {
+      "name": "Lock 3",
+      "ceiling": 0
+    }
+  ],
+  "tasks": [
+    {
+      "name": "IRQ",
+      "activation": "periodic",
+      "priority": 11,
+      "period": "120",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "2",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "120",
+      "response": "0",
+      "uses": []
+    },
+    {
+      "name": "Task 3",
+      "activation": "periodic",
+      "priority": 5,
+      "period": "80",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "8",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "30",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "Lock 3",
+          "duration": "4"
+        }
+      ]
+    },
+    {
+      "name": "Task 2",
+      "activation": "periodic",
+      "priority": 4,
+      "period": "600",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "20",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "40",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "Lock 1",
+          "duration": "7"
+        },
+        {
+          "lock": "Lock 2",
+          "duration": "5"
+        }
+      ]
+    },
+    {
+      "name": "Task 4",
+      "activation": "periodic",
+      "priority": 3,
+      "period": "50",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "15",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "50",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "Lock 1",
+          "duration": "6"
+        }
+      ]
+    },
+    {
+      "name": "Task 1",
+      "activation": "periodic",
+      "priority": 2,
+      "period": "120",
+      "offset": "0",
+      "jitter": "0",
+      "wcet": "25",
+      "blocking": "0",
+      "interference": "0",
+      "deadline": "120",
+      "response": "0",
+      "uses": [
+        {
+          "lock": "Lock 2",
+          "duration": "10"
+        },
+        {
+          "lock": "Lock 3",
+          "duration": "8"
+        }
+      ]
+    }
+  ]
+}

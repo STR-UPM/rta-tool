@@ -1,0 +1,6 @@
+-- Low has T=5 but D=8. All relevant releases must be examined.
+-- R_Low(q) = 6, 7, 4 for q = 0, 1, 2. WCRT = 7, NOT the first-job value 6.
+task set ArbitraryDeadlines with 2 tasks is
+  task High is periodic (2, 7, 0, 0, 4, 0, 0, 4, 0);
+  task Low is periodic (1, 5, 0, 0, 2, 0, 0, 8, 0);
+end ArbitraryDeadlines;

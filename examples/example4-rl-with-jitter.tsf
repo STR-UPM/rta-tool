@@ -1,0 +1,12 @@
+-- Saved by rta-guide4. Time units are user-defined and must be consistent.
+-- Task fields: priority, period, offset, jitter, wcet, blocking, interference, deadline, response.
+task set MUSE-HK with 3 tasks and 2 locks is
+  lock Action (30);
+  lock State (20);
+  task Act is sporadic (30, 200000, 0, 1442.56, 1440, 1.21, 0, 100000, 1441.21)
+    uses Action (1.54);
+  task Decide is sporadic (20, 200000, 0, 8070, 6630, 2.56, 1440, 100000, 8072.56)
+    uses State (3.45), Action (1.21);
+  task Sense is periodic (10, 200000, 0, 0, 2570, 0, 8070, 100000, 10640)
+    uses State (2.56);
+end MUSE-HK;

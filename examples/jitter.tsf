@@ -1,0 +1,6 @@
+-- Higher-priority jitter affects interference; own jitter is added only for periodic tasks.
+task set JitterExample with 3 tasks is
+  task Fast is periodic (3, 10, 0, 2, 2, 0, 0, 10, 0);
+  task Worker is sporadic (2, 25, 0, 3, 4, 0, 0, 25, 0);
+  task IRQ is interrupt (1, 40, 0, 0, 1, 0, 0, 40, 0);
+end JitterExample;
