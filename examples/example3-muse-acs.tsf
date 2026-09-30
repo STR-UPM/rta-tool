@@ -1,0 +1,32 @@
+-- Converted from example3-muse-acs.py; all times are milliseconds.
+-- Original synchronization protocol: PIP (selected on the command line).
+-- Fields: priority, period, offset, jitter, wcet, blocking, interference, deadline, response.
+-- Offset and jitter are zero, as in the original model.
+-- Interference and response are zero placeholders, not analysis results.
+-- Bare lock declarations leave ceilings for the analyzer to compute.
+-- Blocking reproduces the original rta.py PIP calculation:
+--   For each lock with a user at priority >= p and a user at priority < p,
+--   add the maximum critical-section duration across ALL users of that lock.
+-- These legacy estimates are not independently justified general PIP bounds.
+-- Use -pb --protocol PIP to retain priorities and these blocking values.
+-- Do not omit -p: a changed priority order requires recomputing blocking.
+-- Do not omit -b: automatic PIP blocking is not supported by this analyzer.
+-- Run: python -m rta -pb --protocol PIP example3-muse-acs.tsf --precision 6
+-- WCET expressions: Housekeeping 0.013*10 = 0.13; TTC 0.026*10 = 0.26.
+-- Numerical expressions take precedence over inconsistent inline unit comments.
+
+task set MUSE-ACS with 3 tasks and 1 locks is
+
+  -- Protected objects
+  lock Storage;
+
+  -- Tasks
+  task Housekeeping is periodic (20, 1000, 0, 0, 0.13, 0.0041, 0, 1000, 0)
+    uses Storage (0.0031);
+
+  task TTC is periodic (10, 10000, 0, 0, 0.26, 0, 0, 2000, 0)
+    uses Storage (0.0041);
+
+  task ACS is periodic (30, 2000, 0, 0, 74, 0, 0, 100, 0);
+
+end MUSE-ACS;

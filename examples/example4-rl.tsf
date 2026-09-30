@@ -1,0 +1,21 @@
+-- priority, period, offset, jitter, wcet, blocking, interference, deadline, response
+-- time values in microseconds.
+
+task set MUSE-HK with 3 tasks and 2 locks is
+
+  -- Protected objects
+  lock State;
+  lock Action;
+
+  -- Tasks
+  task Sense is periodic (10, 200000, 0, 0, 2570, 0, 0, 100000, 0)
+    uses State  (2.56);
+
+  task Decide is sporadic (20, 200000, 0, 0, 6630, 0, 0, 100000, 0)
+    uses State  (3.45),
+         Action (1.21);
+
+  task Act is sporadic (30, 200000, 0, 0, 1440, 0, 0, 100000, 0)
+    uses Action (1.54);
+
+end MUSE-HK;

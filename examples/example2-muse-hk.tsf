@@ -1,0 +1,29 @@
+-- Converted from example2-muse-hk.py; all times are milliseconds.
+-- Original synchronization protocol: PIP (selected on the command line).
+-- Fields: priority, period, offset, jitter, wcet, blocking, interference, deadline, response.
+-- Offset and jitter are zero, as in the original model.
+-- Interference and response are zero placeholders, not analysis results.
+-- Bare lock declarations leave ceilings for the analyzer to compute.
+-- Blocking reproduces the original rta.py PIP calculation:
+--   For each lock with a user at priority >= p and a user at priority < p,
+--   add the maximum critical-section duration across ALL users of that lock.
+-- These legacy estimates are not independently justified general PIP bounds.
+-- Use -pb --protocol PIP to retain priorities and these blocking values.
+-- Do not omit -p: a changed priority order requires recomputing blocking.
+-- Do not omit -b: automatic PIP blocking is not supported by this analyzer.
+-- Run: python -m rta -pb --protocol PIP example2-muse-hk.tsf --precision 6
+-- Original periods (1000000 and 10000000 ms) are preserved without rescaling.
+
+task set MUSE-HK with 2 tasks and 1 locks is
+
+  -- Protected objects
+  lock Storage;
+
+  -- Tasks
+  task Housekeeping is periodic (20, 1000000, 0, 0, 12.58, 3.43, 0, 1000000, 0)
+    uses Storage (2.52);
+
+  task TTC is periodic (10, 10000000, 0, 0, 27.73, 0, 0, 2000000, 0)
+    uses Storage (3.43);
+
+end MUSE-HK;
