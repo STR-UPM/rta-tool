@@ -2,8 +2,8 @@
 
 ## Supplied Python implementation
 
-`legacy/rta_original.py` is an unchanged copy of the user-supplied `rta(1).py`.
-Its original notice reads:
+`legacy/rta_original.py` is an unchanged copy of the RTA tool used in the HERCCULES
+and UPMSat-3 projects. Its original notices is as follows:
 
 > Copyright (C) 2024 Universidad Politécnica de Madrid
 
